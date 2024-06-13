@@ -100,7 +100,7 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
                 <li
                   key={index}
                   className={`p-2 my-2 text-white hover:scale-110 duration-300 ${
-                    activePath === item.path ? "bg-white/20 dark:bg-sky-500 rounded-lg" : ""
+                    activePath === item.path ? "bg-white/50 dark:bg-sky-500 rounded-lg" : ""
                   }`}
                 >
                   <Link
@@ -138,7 +138,7 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
               <li
                 key={index}
                 className={`p-2 mx-4 text-white ${
-                  activePath === item.path ? "bg-white/20 dark:bg-sky-500 rounded-lg" : ""
+                  activePath === item.path ? "bg-white/50 dark:bg-sky-500 rounded-lg" : ""
                 }`}
               >
                 <Link

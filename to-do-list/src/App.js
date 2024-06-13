@@ -18,11 +18,11 @@ function App() {
       <div className={`${darkMode && 'dark'}`}>
         <Router>
           <div className='grid grid-cols-1 lg:grid-cols-4'>
-            <div className='bg-sky-500 dark:bg-black text-white order-2 lg:order-1'>
+            <div className='bg-sky-900 dark:bg-black text-white order-2 lg:order-1'>
               <Navbar darkMode={darkMode} handleDarkMode={handleDarkMode} />
             </div>
 
-            <div className='bg-sky-200 dark:bg-neutral-800 text-black dark:text-white order-1 lg:order-2 lg:col-span-3 px-8'>
+            <div className='bg-sky-500 dark:bg-neutral-800 text-white order-1 lg:order-2 lg:col-span-3 px-8'>
               <Routes>
                 <Route exact path="/todo" element={<ToDos/>}/>
                 <Route exact path="/done" element={<Done/>}/>
