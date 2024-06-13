@@ -12,6 +12,10 @@ export const Deleted = () => {
     setDeletedToDos(newDeletedTodos)
   };
 
+  const deleteAll = () => {
+    setDeletedToDos([]);
+  }
+
   const restoreToDo = (index) => {
     const newDeletedToDos = [...deletedToDos];
     const restoredToDo = newDeletedToDos.splice(index, 1)[0]; // Rimuove l'elemento specifico e lo restituisce
@@ -45,6 +49,7 @@ export const Deleted = () => {
     <Fragment>
       <div className="flex flex-col justify-between h-[90vh] lg:h-screen">
         <div className='mt-12 mb-12 overflow-auto text-center lg:text-left font-semibold text-xl'>
+          <button className={`bg-red-500 text-white rounded-xl p-2 ${deletedToDos.length === 0 ? 'hidden' : 'block'}`} onClick={deleteAll}>Delete All</button>
           {deletedToDos.length === 0
             ? "No deleted tasks"
             : deletedToDos.map((todo, index) => {
