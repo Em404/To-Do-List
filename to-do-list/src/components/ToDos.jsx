@@ -10,6 +10,10 @@ export const ToDos = () => {
   const [doneToDos, setDoneToDos] = useAtom(doneToDosAtom);
   const [error, setError] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [showActions, setShowActions] = useState(false)
+  const [select, setSelect] = useState(false)
+  const [selectActions, setSelectActions] = useState(false)
+  const [selectedToDo, setSelectedToDo] = useState([])
 
   const handleChangeToDo = (event) => {
     setToDo(event.target.value);
@@ -65,21 +69,53 @@ export const ToDos = () => {
     setEditIndex(index);
   };
 
+  const handleActions = (index) => {
+    setShowActions(index === showActions ? null : index);
+  }
+
+  const handleSelect = () => {
+    setSelect(!select)
+  }
+
+  const handleSelectToDo = (index) => {
+    if (selectedToDo.includes(index)) {
+      setSelectedToDo(selectedToDo.filter(i => i !== index));
+    } else {
+      setSelectedToDo([...selectedToDo, index]);
+    }
+  }
+
+  const handleDoneSelectedToDo = () => {
+    const newToDos = toDos.filter((_, index) => !selectedToDo.includes(index));
+    const doneToDo = toDos.filter((_, index) => selectedToDo.includes(index));
+    setToDos(newToDos);
+    setDoneToDos([...doneToDos, ...doneToDo]);
+    setSelectedToDo([]);
+  }
+
+  const handleDeleteSelectedToDo = () => {
+    const newToDos = toDos.filter((_, index) => !selectedToDo.includes(index));
+    const deletedToDo = toDos.filter((_, index) => selectedToDo.includes(index));
+    setToDos(newToDos);
+    setDeletedToDos([...deletedToDos, ...deletedToDo]);
+    setSelectedToDo([]);
+  }
+
   const checkIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" height={14} width={14} viewBox="0 0 448 512">
-    <path fill="#22c55e" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+    <path fill="#ffffff" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
     </svg>
   )
 
   const trashIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" height={14} width={14} viewBox="0 0 448 512">
-    <path fill="#ef4444" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
+    <path fill="#ffffff" d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/>
     </svg>
   )
 
   const editIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 512 512">
-    <path fill="#f97316" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
+    <path fill="#ffffff" d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
     </svg>
   )
 
@@ -92,18 +128,33 @@ export const ToDos = () => {
     <Fragment>
       <div className='flex flex-col justify-between h-[90vh] lg:h-screen'>
         <div className='mt-12 mb-12 overflow-auto text-center lg:text-left font-semibold text-xl'>
-          {toDos.length === 0 ? 'Your list is empty' : toDos.map((todo, index) => {
+          {toDos.length === 0 ? 'Your list is empty' : 
+          <>
+            <div className='flex justify-between font-normal text-base'>
+              <button className='rounded-xl glass px-4 py-2' onClick={handleSelect}>Select Tasks</button>
+              <div className={`${selectedToDo.length > 0 ? 'block' : 'hidden'}`}>
+                <button className='hover:scale-125 duration-300' onClick={() => handleDoneSelectedToDo()}>{checkIcon}</button>
+                <button className='hover:scale-125 duration-300 mx-4'onClick={() => handleDeleteSelectedToDo()}>{trashIcon}</button>
+              </div>
+            </div>
+            {toDos.map((todo, index) => {
             return (
-              <div key={index} className='flex justify-between glass px-4 py-4 my-4 rounded-lg text-base font-normal'>
+            <div key={index} className='flex'>
+              <input type="checkbox" className={`me-4 hover:cursor-pointer ${select ? 'block' : 'hidden'}`} checked={selectedToDo.includes(index)}
+                  onChange={() => handleSelectToDo(index)} />
+              <div className='flex flex-col glass px-4 py-2 my-4 rounded-lg text-base font-normal w-full hover:cursor-pointer' onClick={() => handleActions(index)}>
                 <p>{todo}</p>
-                <div className='flex'>
+                <div className={`flex justify-end ${showActions === index ? 'block' : 'hidden'}`}>
                   <button className='hover:scale-125 duration-300' onClick={() => handleDone(index)}>{checkIcon}</button>
                   <button className='hover:scale-125 duration-300 mx-4'onClick={() => handleEdit(index)}>{editIcon}</button>
                   <button className='hover:scale-125 duration-300' onClick={() => handleDelete(index, [...toDos], setToDos)}>{trashIcon}</button>
                 </div>
               </div>
+            </div>
             )
           })}
+          </>
+          }
         </div>
         <div className='flex items-baseline pb-12'>
           <input type="text" className={`w-full rounded-lg text-black p-2 ${error ? 'text-red-500' : ''}`} placeholder={error ? 'Type your todo first!' : ''} value={toDo} onChange={handleChangeToDo} onKeyDown={handleKeyDown} />

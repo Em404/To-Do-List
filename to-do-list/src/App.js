@@ -24,7 +24,7 @@ function App() {
 
             <div className='bg-sky-500 dark:bg-neutral-800 text-white order-1 lg:order-2 lg:col-span-3 px-8'>
               <Routes>
-                <Route exact path="/todo" element={<ToDos/>}/>
+                <Route exact path="/" element={<ToDos/>}/>
                 <Route exact path="/done" element={<Done/>}/>
                 <Route exact path="/deleted" element={<Deleted/>}/>
               </Routes>

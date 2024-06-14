@@ -69,7 +69,7 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
     {
       id: 0,
       name: "To Do",
-      path: "/todo",
+      path: "/",
       icon: listIcon,
     },
     {
