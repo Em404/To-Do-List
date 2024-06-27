@@ -131,7 +131,7 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   }
   const mobileNavbar = () => {
     return (
-      <div className="h-[10vh]">
+      <div className="h-[12.6vh]">
         <ul className="w-full h-full flex justify-center items-center">
           {navItems.map((item, index) => {
             return (

@@ -116,41 +116,44 @@ export const Done = () => {
 
   return (
     <Fragment>
-      <div className="flex flex-col justify-between h-[90vh] lg:h-screen">
-        <div className='mt-12 mb-12 overflow-auto text-center lg:text-left font-semibold text-xl'>
+      <div className="flex flex-col justify-between h-[80vh] lg:h-screen py-8 lg:py-12">
+        <div className='overflow-auto text-center lg:text-left font-semibold text-xl'>
           {doneToDos.length === 0
             ? "No done tasks"
             : 
             <Fragment>
               {/* select */}
-              <div className='flex justify-between font-normal text-base'>
+              <div className='flex justify-between font-normal text-base mb-2'>
                 <button className='rounded-full px-4 py-2 bg-blue-900 text-white' onClick={handleSelectAll}>{selectAll ? 'Deselect All' : 'Select All'}</button>
                   <div className={`${selectedToDo.length > 0 ? 'block' : 'hidden'}`}>
                     <button className='dark:bg-white bg-transparent rounded-full p-2' onClick={() => handleRestoreSelectedToDo()}>{restoreIcon}</button>
-                    <button className='ms-2 dark:bg-white bg-transparent rounded-full p-2'onClick={() => handleDeleteSelectedToDo()}>{trashIcon}</button>
+                    <button className='dark:bg-white bg-transparent rounded-full p-2 ms-2'onClick={() => handleDeleteSelectedToDo()}>{trashIcon}</button>
                   </div>
               </div>
               {doneToDos.map((todo, index) => {
                 return (
-                  <div key={index} className="relative flex items-start my-4" onMouseEnter={() => handleMouseEnter(index)} onMouseLeave={handleMouseLeave}>
-                    <input type="checkbox" className='me-2 mt-[0.35rem] hover:cursor-pointer border-blue-900' checked={selectedToDo.includes(index)} onChange={() => handleSelectToDo(index)}/>
-                    <div className='flex px-2 rounded text-base text-start font-normal w-full hover:cursor-pointer overflow-hidden shadow-none dark:shadow-neutral-900 shadow-neutral-400 dark:bg-neutral-800 bg-white'>
+                  <div key={index} className="relative flex items-start py-4 border-b-2" onMouseEnter={() => handleMouseEnter(index)} onMouseLeave={handleMouseLeave}>
+                    <label>
+                      <input type="checkbox" className='me-2 hover:cursor-pointer border-blue-900' checked={selectedToDo.includes(index)} onChange={() => handleSelectToDo(index)}/>
+                      <span class="custom-checkbox"></span>
+                    </label> 
+                    <div className='flex px-2 rounded text-base text-start font-normal w-full hover:cursor-pointer overflow-hidden'>
                       <div className='break-words w-full'>
                         <span className='break-all line-through'>{todo}</span>
                       </div>
-                      <div className={`flex justify-end absolute right-0 top-0 z-10 items-center h-full glass-actions px-4 ${showActions === index ? 'block' : 'hidden'}`}>
+                      <div className={`flex justify-end absolute right-0 top-0 z-10 items-center h-full dark:bg-neutral-900 bg-neutral-100 px-4 ${showActions === index ? 'block' : 'hidden'}`}>
                         <button className="hover:scale-125 duration-300 mx-4" onClick={() => handleRestore(index)}>{restoreIcon}</button>
                         <button className="hover:scale-125 duration-300 mx-4" onClick={() => handleDelete(index)}>{trashIcon}</button>
                       </div>
                       {visibleActions === index && (
-                        <div className='flex justify-end absolute right-[1.35rem] top-0 z-10 items-center h-full glass-actions'>
-                          <button className='ps-2' onClick={() => handleRestore(index)}>{restoreIcon}</button>
-                          <button className='px-2' onClick={() => handleDelete(index)}>{trashIcon}</button>
+                        <div className='flex justify-end absolute right-[1.35rem] top-0 z-10 items-center h-full dark:bg-neutral-900 bg-neutral-100 animate-slide-in'>
+                          <button className='ms-2' onClick={() => handleRestore(index)}>{restoreIcon}</button>
+                          <button className='mx-4' onClick={() => handleDelete(index)}>{trashIcon}</button>
                         </div>
                       )}
                     </div>
                     <div className='flex self-center lg:hidden'>
-                      <button className='ms-2' onClick={() => handleShowActions(index)}>{menuIcon}</button>
+                      <button className='me-2' onClick={() => handleShowActions(index)}>{menuIcon}</button>
                     </div>
                   </div>
                 );
