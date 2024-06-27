@@ -11,6 +11,7 @@ export const ToDos = () => {
   const [error, setError] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [showActions, setShowActions] = useState(false)
+  const [visibleActions, setVisibleActions] = useState(null);
   const [selectAll, setSelectAll] = useState(false)
   const [selectedToDo, setSelectedToDo] = useState([])
 
@@ -109,12 +110,25 @@ export const ToDos = () => {
     setSelectedToDo([]);
   }
 
+  // function to check if it is desktop or mobile
+  function isDesktop() {
+    return window.matchMedia("(pointer: fine)").matches;
+  }
+
   const handleMouseEnter = (index) => {
-    setShowActions(index);
+    if (isDesktop()) {
+      setShowActions(index);
+    }
   };
 
   const handleMouseLeave = () => {
-    setShowActions(null);
+    if (isDesktop()) {
+      setShowActions(null);
+    }
+  };
+
+  const handleShowActions = (index) => {
+    setVisibleActions(visibleActions === index ? null : index);
   };
 
   const checkIcon = (
@@ -141,6 +155,12 @@ export const ToDos = () => {
     </svg>
   )
 
+  const menuIcon = (
+    <svg xmlns="http://www.w3.org/2000/svg" height="14" width="14" viewBox="0 0 128 512" className='text-blue-900'>
+    <path fill="currentColor" d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/>
+    </svg>
+  )
+
   return (
     <Fragment>
       <div className='flex flex-col justify-between h-[90vh] lg:h-screen'>
@@ -149,10 +169,10 @@ export const ToDos = () => {
           <Fragment>
             {/* select */}
             <div className='flex justify-between font-normal text-base'>
-              <button className='rounded-xl px-4 py-2 bg-blue-900 text-white' onClick={handleSelectAll}>{selectAll ? 'Deselect All' : 'Select All'}</button>
+              <button className='rounded-full px-4 py-2 bg-blue-900 text-white' onClick={handleSelectAll}>{selectAll ? 'Deselect All' : 'Select All'}</button>
               <div className={`${selectedToDo.length > 0 ? 'block' : 'hidden'}`}>
-                <button className='dark:bg-white bg-transparent rounded-xl p-2' onClick={() => handleDoneSelectedToDo()}>{checkIcon}</button>
-                <button className='mx-4 dark:bg-white bg-transparent rounded-xl p-2'onClick={() => handleDeleteSelectedToDo()}>{trashIcon}</button>
+                <button className='dark:bg-white bg-transparent rounded-full p-2' onClick={() => handleDoneSelectedToDo()}>{checkIcon}</button>
+                <button className='ms-2 dark:bg-white bg-transparent rounded-full p-2'onClick={() => handleDeleteSelectedToDo()}>{trashIcon}</button>
               </div>
             </div>
 
@@ -160,18 +180,28 @@ export const ToDos = () => {
             {toDos.map((todo, index) => {
               return (
                 <div key={index} className='relative flex items-start my-4' onMouseEnter={() => handleMouseEnter(index)} onMouseLeave={handleMouseLeave}>
-                  <input type="checkbox" className='me-4 hover:cursor-pointer mt-2 border-blue-900' checked={selectedToDo.includes(index)} onChange={() => handleSelectToDo(index)}/>
-                  <div className='flex px-4 py-2 rounded-lg text-base text-start font-normal w-full hover:cursor-pointer overflow-hidden border shadow-md shadow-neutral-400 bg-white'>
+                  <input type="checkbox" className='me-2 mt-[0.35rem] hover:cursor-pointer border-blue-900' checked={selectedToDo.includes(index)} onChange={() => handleSelectToDo(index)}/>
+                  <div className='flex px-2 rounded text-base text-start font-normal w-full hover:cursor-pointer overflow-hidden shadow-none dark:shadow-neutral-900 shadow-neutral-400 dark:bg-neutral-800 bg-white'>
                     <div className='break-words w-full'>
-                      <span className='break-all text-black'>{todo}</span>
+                      <span className='break-all'>{todo}</span>
                     </div>
                     <div className={`flex justify-end absolute right-0 top-0 z-10 items-center h-full glass-actions px-4 ${showActions === index ? 'block' : 'hidden'}`}>
                       <button className='hover:scale-125 duration-300' onClick={() => handleDone(index)}>{checkIcon}</button>
                       <button className='hover:scale-125 duration-300 mx-4'onClick={() => handleEdit(index)}>{editIcon}</button>
                       <button className='hover:scale-125 duration-300' onClick={() => handleDelete(index, [...toDos], setToDos)}>{trashIcon}</button>
                     </div>
+                    {visibleActions === index && (
+                    <div className='flex justify-end absolute right-11 top-0 z-10 items-center h-full glass-actions'>
+                      <button className='ps-2' onClick={() => handleEdit(index)}>{editIcon}</button>
+                      <button className='px-2' onClick={() => handleDelete(index, [...toDos], setToDos)}>{trashIcon}</button>
+                    </div>
+                  )}
                   </div>
-                </div>
+                  <div className='flex self-center lg:hidden'>
+                    <button className='ms-2' onClick={() => handleDone(index)}>{checkIcon}</button>
+                    <button className='ms-2' onClick={() => handleShowActions(index)}>{menuIcon}</button>
+                  </div>
+                </div>   
               );
             })}
           </Fragment>

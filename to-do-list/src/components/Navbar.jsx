@@ -93,14 +93,14 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
     return (
       <div className="flex flex-col justify-between h-screen">
         <div className="px-8 pt-12">
-          <h1 className="font-semibold py-2 mb-4">To Do List</h1>
+          <h1 className="font-semibold py-2 mb-4 text-xl">To Do List</h1>
           <ul>
             {navItems.map((item, index) => {
               return (
                 <li
                   key={index}
                   className={`p-2 my-2 text-white hover:scale-110 duration-300 ${
-                    activePath === item.path ? "bg-white/50 dark:bg-blue-900 rounded-lg" : ""
+                    activePath === item.path ? "bg-white/50 dark:bg-blue-900 rounded-full px-4": ""
                   }`}
                 >
                   <Link
@@ -137,8 +137,8 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
             return (
               <li
                 key={index}
-                className={`p-2 mx-4 text-white ${
-                  activePath === item.path ? "bg-white/50 dark:bg-blue-900 rounded-lg" : ""
+                className={`p-4 mx-2 text-white ${
+                  activePath === item.path ? "bg-white/50 dark:bg-blue-900 rounded-full" : ""
                 }`}
               >
                 <Link

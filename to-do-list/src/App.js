@@ -22,7 +22,7 @@ function App() {
               <Navbar darkMode={darkMode} handleDarkMode={handleDarkMode} />
             </div>
 
-            <div className='bg-neutral-100 dark:bg-neutral-800 text-black dark:text-white order-1 lg:order-2 lg:col-span-3 px-8'>
+            <div className='bg-neutral-100 dark:bg-neutral-900 text-black dark:text-white order-1 lg:order-2 lg:col-span-3 px-4 md:px-8'>
               <Routes>
                 <Route exact path="/" element={<ToDos/>}/>
                 <Route exact path="/done" element={<Done/>}/>
