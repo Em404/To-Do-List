@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { ToDos } from './components/ToDos'
 import { Done } from './components/Done'
@@ -7,7 +7,16 @@ import { Deleted } from './components/Deleted'
 
 function App() {
 
-  const [darkMode, setDarkMode] = useState(true);
+  // Dark mode state
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedDarkMode = localStorage.getItem('dark-mode');
+    return savedDarkMode ? JSON.parse(savedDarkMode) : true;
+  });
+
+  // Set dark mode state to localStorage
+  useEffect(() => {
+    localStorage.setItem('dark-mode', JSON.stringify(darkMode));
+  }, [darkMode]);
 
   const handleDarkMode = () => {
     setDarkMode(!darkMode);
