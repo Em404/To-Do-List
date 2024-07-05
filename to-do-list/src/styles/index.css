@@ -24,7 +24,6 @@ backdrop-filter: blur(5px);
 border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-
 /* Nascondere la checkbox originale */
  input[type="checkbox"] {
   display: none;
@@ -35,7 +34,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
   display: inline-block;
   width: 1rem;
   height: 1rem;
-  border: 2px solid rgb(30, 58, 138);
+  border: 2px solid rgb(255, 255, 255);
   border-radius: 50%;
   position: relative;
   cursor: pointer;
@@ -46,7 +45,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
   content: '';
   width: 0.5rem;
   height: 0.5rem;
-  background: rgb(30, 58, 138);
+  background: rgb(255, 255, 255);
   border-radius: 50%;
   position: absolute;
   top: 50%;

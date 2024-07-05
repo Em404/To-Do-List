@@ -12,8 +12,8 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   const listIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={14}
-      width={14}
+      height={20}
+      width={20}
       viewBox="0 0 512 512"
     >
       <path
@@ -26,8 +26,8 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   const checkIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={14}
-      width={14}
+      height={20}
+      width={20}
       viewBox="0 0 448 512"
     >
       <path
@@ -40,8 +40,8 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   const trashIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height={14}
-      width={14}
+      height={20}
+      width={20}
       viewBox="0 0 448 512"
     >
       <path
@@ -54,8 +54,8 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   const iconTheme = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height="14"
-      width="14"
+      height={20}
+      width={20}
       viewBox="0 0 512 512"
     >
       <path
@@ -91,7 +91,7 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   }
   const desktopNavbar = () => {
     return (
-      <div className="flex flex-col justify-between h-screen">
+      <div className="flex flex-col justify-between h-full">
         <div className="px-8 pt-12">
           <h1 className="font-semibold py-2 mb-4 text-xl">To Do List</h1>
           <ul>
@@ -99,13 +99,13 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
               return (
                 <li
                   key={index}
-                  className={`p-2 my-2 text-white hover:scale-110 duration-300 ${
-                    activePath === item.path ? "bg-white/50 dark:bg-blue-900 rounded-full px-4": ""
+                  className={`p-2 my-2 hover:scale-110 duration-300 ${
+                    activePath === item.path ? "bg-white/20 dark:bg-black/20  rounded-xl px-4": ""
                   }`}
                 >
                   <Link
                     to={item.path}
-                    className="flex items-baseline"
+                    className="flex items-center"
                     onClick={() => handleNavClick(item.path)}
                   >
                     <div>{item.icon}</div>
@@ -116,8 +116,8 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
             })}
           </ul>
         </div>
-        <div className="px-8 pb-12">
-          <button className="flex items-baseline" onClick={handleDarkMode}>
+        <div className="px-10 pb-12">
+          <button className="flex items-center" onClick={handleDarkMode}>
             <div>{iconTheme}</div>
             <div className="px-2">Theme</div>
           </button>
@@ -131,14 +131,14 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
   }
   const mobileNavbar = () => {
     return (
-      <div className="h-[12.6vh]">
-        <ul className="w-full h-full flex justify-center items-center">
+      <>
+        <ul className="flex justify-center items-center">
           {navItems.map((item, index) => {
             return (
               <li
                 key={index}
-                className={`p-4 mx-2 text-white ${
-                  activePath === item.path ? "bg-white/50 dark:bg-blue-900 rounded-full" : ""
+                className={`text-white w-20 py-2 ${
+                  activePath === item.path ? "bg-white/20 dark:bg-black/20 rounded-xl" : ""
                 }`}
               >
                 <Link
@@ -146,26 +146,30 @@ export const Navbar = ({ darkMode, handleDarkMode }) => {
                   className="flex items-baseline"
                   onClick={() => handleNavClick(item.path)}
                 >
-                  <div>{item.icon}</div>
+                  <div className="flex flex-col w-full">
+                    <div className="self-center">{item.icon}</div>
+                    <p className="self-center text-sm mt-1">{item.name}</p>
+                  </div>
                 </Link>
               </li>
             );
           })}
-           <button className="mx-4" onClick={handleDarkMode}>
-            <div>{iconTheme}</div>
+          <button className="ms-2 flex flex-col" onClick={handleDarkMode}>
+            <div className="self-center">{iconTheme}</div>
+            <p className="self-center text-sm">Theme</p>
           </button>
         </ul>
-      </div>
+      </>
     );
   };
 
   return (
     <Fragment>
       {/* Desktop Navbar */}
-      <div className="hidden lg:block">{desktopNavbar()}</div>
+      <div className="hidden lg:block h-screen text-white">{desktopNavbar()}</div>
 
       {/* Mobile Navbar */}
-      <div className="block lg:hidden">{mobileNavbar()}</div>
+      <div className="flex justify-center items-center lg:hidden h-full bg-black/30 rounded-t-xl">{mobileNavbar()}</div>
     </Fragment>
   );
 };

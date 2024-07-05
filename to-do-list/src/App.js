@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { ToDos } from './components/ToDos'
 import { Done } from './components/Done'
 import { Deleted } from './components/Deleted'
+import Header from './components/Header';
 
 function App() {
 
@@ -26,12 +27,16 @@ function App() {
     <Fragment>
       <div className={`${darkMode && 'dark'}`}>
         <Router>
-          <div className='grid grid-cols-1 lg:grid-cols-4'>
-            <div className='bg-blue-900 dark:bg-black text-white order-2 lg:order-1'>
+          <div className='grid grid-cols-1 lg:grid-cols-4 
+          bg-gradient-to-b lg:bg-gradient-to-l
+          from-neutral-50 from-30% via-purple-800 via-80% to-purple-950 to-100%
+          dark:from-neutral-950 dark:from-30% dark:via-purple-950 dark:via-80% dark:to-purple-800 dark:to-100%
+          h-screen lg:h-full'>
+            <div className='text-white order-2 lg:order-1 h-[10vh] lg:h-screen'>
               <Navbar darkMode={darkMode} handleDarkMode={handleDarkMode} />
             </div>
 
-            <div className='bg-neutral-100 dark:bg-neutral-900 text-black dark:text-white order-1 lg:order-2 lg:col-span-3 px-4 md:px-8'>
+            <div className='text-white order-1 lg:order-2 lg:col-span-3 h-[90vh] lg:h-screen'>
               <Routes>
                 <Route exact path="/" element={<ToDos/>}/>
                 <Route exact path="/done" element={<Done/>}/>
