@@ -4,7 +4,6 @@ import { Navbar } from './components/Navbar';
 import { ToDos } from './components/ToDos'
 import { Done } from './components/Done'
 import { Deleted } from './components/Deleted'
-import Header from './components/Header';
 
 function App() {
 
